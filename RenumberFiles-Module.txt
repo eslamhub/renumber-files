@@ -1,0 +1,67 @@
+Option Explicit
+
+Sub RenumberFiles()
+    Dim folderPath$, fileName$, newName$
+    Dim fso As Object, folder As Object, file As Object
+    Dim regEx As Object, matches As Object
+    Dim startNum&, endNum&, padLength&, increment&
+    Dim fromIndex&, toIndex&, stepVal&, fileCount&, i&
+    Dim inputStr$, inputValues As Variant, files As Collection
+    Const del$ = "_"
+
+    ' Select a folder
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Select a folder"
+        If .InitialFileName = "" Then .InitialFileName = ThisWorkbook.Path & "\"
+        If .Show <> -1 Then Exit Sub
+        folderPath = .SelectedItems(1) & "\"
+    End With
+
+    ' Initialize and check folder
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Set folder = fso.GetFolder(folderPath)
+    fileCount = folder.files.Count
+    If fileCount <= 0 Then MsgBox "The folder is empty.", vbInformation, "Empty Folder": Exit Sub
+    
+    ' Get and validate user input
+    Set regEx = CreateObject("VBScript.RegExp")
+    regEx.Pattern = "^\d+,\d+,\d+,-?\d+$"
+    Do
+        inputStr = InputBox("Enter: Start, End, Pad, Increment", "Batch Input", "1," & fileCount & ",3,1")
+        If StrPtr(inputStr) = 0 Then Exit Sub Else inputValues = Split(inputStr & ",,,", ",")
+        startNum = Val(inputValues(0))
+        endNum = Val(inputValues(1))
+        padLength = Val(inputValues(2))
+        increment = Val(inputValues(3))
+        If regEx.test(inputStr) And startNum > 0 And startNum <= endNum And endNum <= fileCount And padLength > 0 And padLength < 11 Then Exit Do
+        MsgBox "Ensure: Start >= 1, End <= " & fileCount & ", Pad: 1-10, Increment != text.", vbExclamation, "Invalid Input"
+    Loop
+    
+    ' Determine loop direction
+    If increment > 0 Then
+        fromIndex = endNum: toIndex = startNum: stepVal = -1
+    Else
+        fromIndex = startNum: toIndex = endNum: stepVal = 1
+    End If
+    
+    ' Collect files
+    Set files = New Collection
+    For Each file In folder.files: files.Add file: Next
+    
+    ' Rename matching files
+    regEx.Pattern = del & "([0-9]+)$"
+    For i = fromIndex To toIndex Step stepVal
+        fileName = fso.GetBaseName(files(i))
+        Set matches = regEx.Execute(fileName)
+        If matches.Count > 0 Then
+            newName = regEx.Replace(fileName, del & Format(CLng(matches(0).SubMatches(0)) + increment, String(padLength, "0"))) & "." & fso.GetExtensionName(files(i))
+            If Dir(folderPath & newName) = "" Then
+                files(i).Name = newName
+            ElseIf increment <> 0 Then
+                MsgBox newName & " already exists.", vbCritical, "Name Conflict": Exit Sub
+            End If
+        End If
+    Next i
+    
+    MsgBox "Files renamed successfully!", vbInformation, "Success"
+End Sub

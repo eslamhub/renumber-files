@@ -1,0 +1,40 @@
+Option Explicit
+
+#If False Then
+'-------------
+Private Sub Workbook_Open()
+    On Error GoTo ErrorHandler
+
+    ' Hide Application or Workbook
+    If Application.Workbooks.Count = 1 Then
+        Application.Visible = False
+    Else
+        ThisWorkbook.Windows(1).Visible = False
+    End If
+    
+    'Run the Macro
+    Call RenumberFiles
+    
+    ' Exit or back to Workbook
+    Dim response As VbMsgBoxResult: Beep
+    response = MsgBox("[Yes] to Open Workbook" & vbCrLf & "[No] to Close Workbook", vbYesNo + vbQuestion, "Choice")
+    If response = vbYes Then
+        ThisWorkbook.Windows(1).Visible = True
+        Application.Visible = True
+    Else
+        If Application.Workbooks.Count = 1 Then
+            Application.DisplayAlerts = False
+            Application.Quit
+        Else
+            ThisWorkbook.Close SaveChanges:=False
+        End If
+    End If
+    
+Exit Sub
+ErrorHandler:
+    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error"
+    ThisWorkbook.Windows(1).Visible = True
+    Application.Visible = True
+End Sub
+'------
+#End If
