@@ -33,7 +33,8 @@ and look for the line:
 
 ```vba
 Const del$ = "_"
-```Then change `_` to any separator you want, such as `-` or `.`.
+```
+Then change `_` to any separator you want, such as `-` or `.`.
 
 ### 📁 Folder Selection
 
