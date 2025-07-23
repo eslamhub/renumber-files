@@ -1,46 +1,57 @@
-# Renumber Files Module - EslamHub
-مرحبًا بكم في مستودع Renumber Files من قناة EslamHub! 🚀
-يحتوي هذا المستودع على ملف Excel لإعادة تسمية أرقام ملفات مجلد بسهولة وسرعة باستخدام VBA،
-بالإضافة إلى ملفين نصيين يحتويان على أكواد VBA المستخدمة في الملف.
+# 🔢 Renumber Files Module – EslamHub
 
-## المحتويات
-- 📊 **RenumberFiles.xlsm**: ملف Excel جاهز لإعادة تسمية الملفات.
-- 🧾 **Workbook_Open-Event.txt**: كود حدث فتح الملف (الحدث `Workbook_Open` داخل ThisWorkbook).
-- 🧾 **RenumberFiles-Module.txt**: الكود الرئيسي لإعادة الترقيم (Module مستقل داخل Excel).
+Welcome to the **Renumber Files** repository by the **EslamHub** channel! 🚀  
+This repository includes an Excel file to easily and quickly rename folder file numbers using **VBA**,  
+along with two text files containing the **VBA code** used in the workbook.
 
-## تعليمات الاستخدام
+## Contents
 
-### 🔁 التشغيل التلقائي
-لتفعيل التشغيل التلقائي عند فتح الملف، افتح حدث `Workbook_Open` داخل نافذة ThisWorkbook،  
-أو ملف `Workbook_Open-Event.txt`، وابحث عن السطر:
+- 📊 **RenumberFiles.xlsm**: A ready-to-use Excel file for renaming files.
+- 🧾 **Workbook_Open-Event.txt**: The `Workbook_Open` event code (inside `ThisWorkbook`).
+- 🧾 **RenumberFiles-Module.txt**: The main renumbering code (a standalone module inside Excel).
+
+## Usage Instructions
+
+### 🔁 Auto Run
+
+To enable automatic execution when opening the file, open the `Workbook_Open` event inside the **ThisWorkbook** window,  
+or open the `Workbook_Open-Event.txt` file, and look for the line:
+
 ```vba
 #If False Then
 ```
-ثم غيّر الكلمة `False` إلى `True` ليصبح السطر:
+Then change False to True, so the line becomes:
 ```vba
 #If True Then
 ```
-بعد انتهاء التشغيل، ستظهر لك رسالة تتيح لك اختيار فتح الملف أو الإغلاق.
+After execution is complete, a message will appear allowing you to choose whether to open the file or close it.
 
-### ✂️ تخصيص الفاصل
-لتغيير الفاصل (مثل `_`) قبل الترقيم، افتح ملف `RenumberFiles-Module.txt` أو موديول الكود داخل Excel،  
-وابحث عن السطر:
+### ✂️ Customize the Separator
+
+To change the separator (such as `_`) used before numbering, open the `RenumberFiles-Module.txt` file or the code module inside Excel,  
+and look for the line:
+
 ```vba
 Const del$ = "_"
-```
-ثم غيّر `_` إلى أي فاصل تريده مثل `-` أو `.`.
+```Then change `_` to any separator you want, such as `-` or `.`.
 
-### 📁 اختيار المجلد
-عند تشغيل الأداة، ستطلب منك اختيار المجلد. المسار الافتراضي هو نفس مسار ملف Excel.
+### 📁 Folder Selection
 
-### 🧮 إدخال البيانات
-سيُطلب منك إدخال القيم التالية:
-1. **رقم البداية**: بداية الترقيم.
-2. **رقم النهاية**: نهاية الترقيم.
-3. **تنسيق الأرقام**: عدد الأصفار (مثل 2 → 00، 3 → 000).
-4. **مقدار التغيير**: مثل `+1`, `-2`, أو `0` إن كنت تريد التنسيق فقط.
+When you run the tool, it will prompt you to select a folder.  
+The default path is the same as the Excel file location.
 
-## 🌐 تواصلوا معي
+### 🧮 Data Input
+
+You will be prompted to enter the following values:
+
+1. **Start Number**: The beginning of the numbering.
+2. **End Number**: The end of the numbering.
+3. **Number Format**: Number of digits (e.g., 2 → `00`, 3 → `000`).
+4. **Change Amount**: Such as `+1`, `-2`, or `0` if you just want to format numbers.
+
+
+## 🌐 Connect with Me
+
 📺 [YouTube](https://www.youtube.com/@eslamhub)
 📱 [TikTok](https://www.tiktok.com/@eslamhub)
 📢 [LinkedIn](https://www.linkedin.com/in/eslamhub)
@@ -48,4 +59,4 @@ Const del$ = "_"
 📘 [Facebook](https://www.facebook.com/eslamhub1)
 📸 [Instagram](https://www.instagram.com/eslam.hub)
 
-#Excel #VBA #EslamHub
+#Excel #VBA #FileRenaming #EslamHub
